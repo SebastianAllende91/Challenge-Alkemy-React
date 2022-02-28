@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDebounce } from "../hooks/useDebounce";
 import Button from "./Button";
 
 const SearchInput = () => {
@@ -8,7 +9,7 @@ const SearchInput = () => {
 
   const onSubmitInput = (e) => {
     e.preventDefault();
-    if (query !== "") {
+    if (query !== "" && query.length > 2) {
       history.push(`/App/list/${query}`);
     }
   };
@@ -24,7 +25,12 @@ const SearchInput = () => {
         aria-label="Search"
         onChange={handleChange}
       />
-      <Button text={"Search"} color={"outline-light"} action={onSubmitInput} />
+      <Button
+        text={"Search"}
+        color={"outline-light"}
+        action={onSubmitInput}
+        disabled={query.length <= 2}
+      />
     </form>
   );
 };

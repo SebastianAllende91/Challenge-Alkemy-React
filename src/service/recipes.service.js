@@ -5,17 +5,19 @@ const search = "complexSearch";
 
 let getRecipes = (page = 0, limit = 30) => {
   return http.get(
-    `/${search}?apiKey=${apiKey}&offset=${page * limit}&number=${limit}`
+    `/${search}?apiKey=${apikey2}&offset=${page * limit}&number=${limit}`
   );
 };
 
 const getRecipeById = (id) => {
-  return http.get(`/${id}/information?apiKey=${apiKey}&includeNutrition=false`);
+  return http.get(
+    `/${id}/information?apiKey=${apikey2}&includeNutrition=false`
+  );
 };
 
 const getProductSearch = (query, page = 0, limit = 30) => {
   return http.get(
-    `/${search}?apiKey=${apiKey}&query=${query}&offset=${
+    `/${search}?apiKey=${apikey2}&query=${query}&offset=${
       page * limit
     }&number=${limit}`
   );

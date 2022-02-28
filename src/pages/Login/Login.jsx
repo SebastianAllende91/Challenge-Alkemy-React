@@ -12,6 +12,7 @@ const Formulario = () => {
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modifiedForm, setModifiedForm] = useState(false);
+  const [needReset, setNeedReset] = useState(false);
   const history = useHistory();
 
   const onSubmit = useCallback(
@@ -38,6 +39,7 @@ const Formulario = () => {
           })
           .catch((error) => {
             setIsSubmitting(false);
+            setNeedReset(true);
             Swal.fire({
               title: "Error",
               text: `${error}`,
@@ -61,7 +63,16 @@ const Formulario = () => {
           }}
           onSubmit={onSubmit}
         >
-          {({ handleSubmit, valid, pristine, values }) => {
+          {({ handleSubmit, valid, pristine, values, form }) => {
+            if (needReset) {
+              setNeedReset(false);
+              setTimeout(() => {
+                form.reset();
+                window.location.reload();
+                form.resetFieldState("Email");
+                form.resetFieldState("Password");
+              });
+            }
             if (!pristine && !pristine !== modifiedForm) {
               setModifiedForm(!pristine);
             }

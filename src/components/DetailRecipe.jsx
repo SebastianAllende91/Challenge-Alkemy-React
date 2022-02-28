@@ -29,6 +29,34 @@ const DetailRecipe = () => {
     dispatch(getRecipeGetById(id));
   }, [dispatch, id]);
 
+  const validateType = () => {
+    const notVeganMenues = myMenu.filter((menu) => !menu.vegan);
+    const veganMenues = myMenu.filter((menu) => menu.vegan);
+
+    let quantityVegan =
+      veganMenues.length === 1 ? veganMenues[0].quantity : veganMenues.length;
+
+    let quantityNotVeganMenues =
+      notVeganMenues.length === 1
+        ? notVeganMenues[0].quantity
+        : notVeganMenues.length;
+
+    if (quantityVegan < 2 && recipeSelect.vegan) {
+      return addItem();
+    }
+
+    if (quantityNotVeganMenues < 2 && !recipeSelect.vegan) {
+      return addItem();
+    }
+
+    Swal.fire({
+      title: "ya contiene dos tipos ",
+      icon: "error",
+      timer: 3000,
+      button: "Acept",
+    });
+  };
+
   const addItem = () => {
     const array = [];
 
@@ -62,7 +90,7 @@ const DetailRecipe = () => {
           timer: 3000,
           button: "Acept",
         })
-      : addItem();
+      : validateType();
   };
 
   if (loading) return <Snipper />;
