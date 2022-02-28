@@ -1,0 +1,14 @@
+#navbar {
+  background-color: var(--second-color);
+}
+
+a {
+  color: var(--tertiary-color);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+a:hover {
+  color: var(--main-color);
+}
